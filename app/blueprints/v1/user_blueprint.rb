@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 module V1
-	class UserBlueprint < Blueprinter::Base
-		fields :id, :email, :first_name, :last_name
-	end
+  class UserBlueprint < Blueprinter::Base
+    fields :id, :email, :first_name, :last_name
+  end
 end

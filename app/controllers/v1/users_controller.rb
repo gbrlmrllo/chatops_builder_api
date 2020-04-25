@@ -6,13 +6,13 @@ module V1
     before_action :set_user
 
     def show
-    	render json: V1::UserBlueprint.render(@user)
+      render json: V1::UserBlueprint.render(@user)
     end
 
     private
 
     def set_user
-    	@user = User.find(params[:id])
+      @user = User.find(params[:id])
     end
   end
 end
