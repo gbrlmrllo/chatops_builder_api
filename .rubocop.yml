@@ -1,0 +1,66 @@
+inherit_from: .rubocop_todo.yml
+
+require:
+  - rubocop-rails
+  - rubocop-rspec
+  - rubocop-performance
+
+AllCops:
+  # Override rubocop-rails target version
+  TargetRubyVersion: 2.6
+
+  # Display Cop name, please!
+  DisplayCopNames: true
+
+Style/HashEachMethods:
+  Enabled: true
+
+Style/HashTransformKeys:
+  Enabled: true
+
+Style/HashTransformValues:
+  Enabled: true
+
+Style/Documentation:
+  Enabled: false
+
+Layout/SpaceAroundMethodCallOperator:
+  Enabled: true
+
+Lint/RaiseException:
+  Enabled: true
+
+Lint/StructNewOverride:
+  Enabled: true
+
+Style/ExponentialNotation:
+  Enabled: true
+
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/jobs/**/*'
+    - 'spec/models/**/*'
+    - 'spec/requests/**/*'
+    - 'spec/services/**/*'
+    - 'spec/controllers/**/*'
+
+Rails/BulkChangeTable:
+  Enabled: false
+
+RSpec/DescribeClass:
+  Exclude:
+    - 'spec/requests/**/*'
+
+RSpec/FilePath:
+  Exclude:
+    - 'spec/requests/**/*'
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+
+Style/SymbolProc:
+  Exclude:
+    - 'app/blueprints/**/*'
+
+RSpec/NestedGroups:
+  Max: 4
