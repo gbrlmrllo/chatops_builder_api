@@ -153,6 +153,7 @@ GEM
     nio4r (2.5.2)
     nokogiri (1.10.9)
       mini_portile2 (~> 2.4.0)
+    oj (3.10.6)
     orm_adapter (0.5.0)
     parallel (1.19.1)
     parser (2.7.1.1)
@@ -332,6 +333,7 @@ DEPENDENCIES
   faraday
   faraday_middleware
   ffaker
+  oj
   pg (>= 0.18, < 2.0)
   pry-rails
   puma (~> 4.3)
