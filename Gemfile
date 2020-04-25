@@ -25,15 +25,15 @@ gem "webmock"
 
 group :development, :test do
   gem "byebug", platforms: %i[mri mingw x64_mingw]
+  gem "dotenv-rails", "~> 2.7"
   gem "factory_bot_rails"
   gem "ffaker"
   gem "pry-rails"
-  gem "dotenv-rails", "~> 2.7"
   gem "rspec-rails", "~> 3.9"
-  gem "rubocop",             require: false
   gem "rubocop-performance", require: false
   gem "rubocop-rails",       require: false
   gem "rubocop-rspec",       require: false
+  gem "rubocop",             require: false
 end
 
 group :test do
