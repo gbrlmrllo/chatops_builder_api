@@ -16,7 +16,8 @@ RSpec.describe V1::UsersController, type: :controller do
       end
 
       it "matches user object" do
-        expect(response.body).to eq(user.to_json)
+        data = user.slice(:id, :email, :first_name, :last_name)
+        expect(response.parsed_body).to match(hash_including(data))
       end
     end
 
