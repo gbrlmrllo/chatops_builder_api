@@ -1,16 +1,14 @@
-![CI](https://github.com/gbrlmrllo/rails_api_boilerplate/workflows/CI/badge.svg)
+![CI](https://github.com/gbrlmrllo/chatops_builder_api/workflows/CI/badge.svg)
 
-rails_api_boilerplate is the base Rails api application used for me.
+**ChatOps Builder** is an app that allows you to centralize your notification events in order to monitor them and also be able to integrate them into applications such as [Slack](https://slack.com/intl/es-ar/), [SendGrid](https://sendgrid.com/), [Microsoft Teams](https://www.microsoft.com/es-ar/microsoft-365/microsoft-teams/group-chat-software), and many more.
 
-### Associated services
+## Associated services
 
 * Enable [Github Actions CI](https://help.github.com/en/actions/building-and-testing-code-with-continuous-integration/setting-up-continuous-integration-using-github-actions) Continuous Integration
-* Enable [GitHub auto deploys to Heroku staging and review
-    apps](https://dashboard.heroku.com/apps/chatops-events-staging/deploy/github).
 
 ## Installation
 
-Setup JWT secret for [devise](https://github.com/gbrlmrllo/rails_api_boilerplate/blob/master/config/initializers/devise.rb#L302).
+Setup JWT secret for [devise](https://github.com/gbrlmrllo/chatops_builder_api/blob/master/config/initializers/devise.rb#L302).
 
 ```
 export JWT_SECRET_KEY="you can use "rails secret" for generate a secret token"
@@ -25,7 +23,7 @@ Run application setup
 ## Gemfile
 
 To see the latest and greatest gems, look at
-[Gemfile](https://github.com/gbrlmrllo/rails_api_boilerplate/blob/master/Gemfile)
+[Gemfile](https://github.com/gbrlmrllo/chatops_builder_api/blob/master/Gemfile)
 
 It includes application gems like:
 
