@@ -7,5 +7,9 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          :jwt_authenticatable, jwt_revocation_strategy: self
 
-  has_many :apps, class_name: 'App', foreign_key: :owner_id
+  has_many :apps,
+           class_name: "App",
+           foreign_key: :owner_id,
+           inverse_of: :user,
+           dependent: :destroy
 end

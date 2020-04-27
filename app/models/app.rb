@@ -1,6 +1,8 @@
-class App < ApplicationRecord
-  belongs_to :owner, class_name: 'User'
-  has_one :credential
+# frozen_string_literal: true
 
-  before_create ->{ build_credential }
+class App < ApplicationRecord
+  belongs_to :owner, class_name: "User"
+  has_one :credential, dependent: :destroy
+
+  before_create -> { build_credential }
 end

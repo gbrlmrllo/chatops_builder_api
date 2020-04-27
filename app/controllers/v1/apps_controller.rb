@@ -3,7 +3,7 @@
 module V1
   class AppsController < ApplicationController
     before_action :authenticate_user!
-    before_action :set_app, only: [:show, :update, :destroy]
+    before_action :set_app, only: %i[show update destroy]
 
     # GET /apps
     def index
@@ -11,12 +11,12 @@ module V1
 
       render json: V1::AppBlueprint.render(@apps)
     end
-  
+
     # GET /apps/1
     def show
       render json: V1::AppBlueprint.render(@app)
     end
-  
+
     # POST /apps
     def create
       @app = current_user.apps.new(app_params)
@@ -44,15 +44,15 @@ module V1
     end
 
     private
-      # Use callbacks to share common setup or constraints between actions.
-      def set_app
-        @app = current_user.apps.find(params[:id])
-      end
 
-      # Only allow a trusted parameter "white list" through.
-      def app_params
-        params.require(:app).permit(:name)
-      end
+    # Use callbacks to share common setup or constraints between actions.
+    def set_app
+      @app = current_user.apps.find(params[:id])
+    end
+
+    # Only allow a trusted parameter "white list" through.
+    def app_params
+      params.require(:app).permit(:name)
+    end
   end
 end
-
