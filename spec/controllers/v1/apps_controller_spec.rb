@@ -40,7 +40,9 @@ RSpec.describe V1::AppsController, type: :controller do
   # AppsController. Be sure to keep this updated too.
   let(:valid_session) { {} }
 
-  login_user
+  let(:user) { create(:user) }
+
+  before { sign_in user }
 
   describe "GET #index" do
     it "returns a success response" do
