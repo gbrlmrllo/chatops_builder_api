@@ -39,7 +39,10 @@ module BackendApi
     config.middleware.insert_before 0, Rack::Cors do
       allow do
         origins "*"
-        resource "*", headers: :any, methods: %i[post]
+        resource "*",
+                 headers: :any,
+                 methods: %i[get patch put delete post options],
+                 expose: %w[Authorization]
       end
     end
   end
