@@ -3,9 +3,9 @@
 class Credential < ApplicationRecord
   belongs_to :app
 
-  before_create :token_init
+  before_create :regenerate_token!
 
-  def token_init
+  def regenerate_token!
     self.token = SecureRandom.base64(30)
   end
 end

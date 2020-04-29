@@ -2,6 +2,6 @@
 
 module V1
   class AppBlueprint < Blueprinter::Base
-    fields :id, :name
+    fields :id, :name, :created_at
   end
 end

@@ -10,6 +10,6 @@ class User < ApplicationRecord
   has_many :apps,
            class_name: "App",
            foreign_key: :owner_id,
-           inverse_of: :user,
+           inverse_of: :owner,
            dependent: :destroy
 end

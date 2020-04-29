@@ -7,10 +7,12 @@ module V1
     before_action :set_credential
 
     def regenerate_token
-      if @cred&.update(token: secure_token)
-        render json: V1::CredentialBlueprint.render(@cred)
+      @credential.regenerate_token!
+
+      if @credential.save
+        render json: V1::CredentialBlueprint.render(@credential)
       else
-        render json: @cred.errors, status: :unprocessable_entity
+        render json: @credential.errors, status: :unprocessable_entity
       end
     end
 
@@ -22,11 +24,7 @@ module V1
     end
 
     def set_credential
-      @cred = @app&.credential
-    end
-
-    def secure_token
-      SecureRandom.base64(30)
+      @credential = @app.credential
     end
   end
 end
