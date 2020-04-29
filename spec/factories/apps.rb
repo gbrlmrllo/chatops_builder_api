@@ -2,7 +2,8 @@
 
 FactoryBot.define do
   factory :app do
-    name { "MyString" }
-    owner { nil }
+    name { "SendGrid" }
+    owner factory: :user
+    association :credential
   end
 end

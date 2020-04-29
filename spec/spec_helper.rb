@@ -15,7 +15,13 @@
 # it.
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
+require_relative "support/controller_macros"
+
 RSpec.configure do |config|
+
+  # Extend controller methods for login
+  config.extend ControllerMacros, :type => :controller
+
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
   # assertions if you prefer.

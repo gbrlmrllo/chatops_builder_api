@@ -23,7 +23,6 @@ module V1
 
       if @app.save
         render json: V1::AppBlueprint.render(@app)
-        # render json: @app, status: :created, location: @app
       else
         render json: @app.errors, status: :unprocessable_entity
       end

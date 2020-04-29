@@ -5,4 +5,6 @@ class App < ApplicationRecord
   has_one :credential, dependent: :destroy
 
   before_create -> { build_credential }
+
+  validates :name, presence: true
 end
