@@ -17,17 +17,17 @@ RSpec.describe SessionsController, type: :request do
 
   context "with user sign in" do
     context "when params are correct" do
-      # before { post url, params: params }
+      before { post url, params: params }
 
-      skip "returns 200" do
+      it "returns 200" do
         expect(response.status).to eq 200
       end
 
-      skip "returns JTW token in authorization header" do
+      it "returns JTW token in authorization header" do
         expect(response.headers["Authorization"]).to be_present
       end
 
-      skip "returns valid JWT token" do
+      it "returns valid JWT token" do
         expect(decode_token(response).first["sub"]).to be_present
       end
     end
