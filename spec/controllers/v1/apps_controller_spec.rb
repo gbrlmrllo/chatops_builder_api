@@ -110,9 +110,5 @@ RSpec.describe V1::AppsController, type: :controller do
     it "destroys the requested app" do
       expect(App.count).to eq(0)
     end
-
-    it "responses with correct content type" do
-      expect(response.content_type).to eq(valid_content_type)
-    end
   end
 end

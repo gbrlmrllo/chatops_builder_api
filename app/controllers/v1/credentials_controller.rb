@@ -7,7 +7,7 @@ module V1
     before_action :set_credential
 
     def regenerate_token
-      @credential.regenerate_token!
+      @credential.regenerate_token
 
       if @credential.save
         render json: V1::CredentialBlueprint.render(@credential)
