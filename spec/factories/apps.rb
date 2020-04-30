@@ -3,7 +3,6 @@
 FactoryBot.define do
   factory :app do
     name { "SendGrid" }
-    owner factory: :user
-    association :credential
+    association :owner, factory: :user
   end
 end

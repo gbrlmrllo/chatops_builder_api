@@ -18,7 +18,7 @@ Rails.application.routes.draw do
   namespace :v1 do
     resources :users, only: :show
     resources :apps do
-      get "/regenerate-token", to: "regenerate_token#credentials"
+      get "/regenerate-token", to: "credentials#regenerate_token"
     end
   end
 end
