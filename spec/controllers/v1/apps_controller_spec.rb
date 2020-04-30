@@ -46,7 +46,7 @@ RSpec.describe V1::AppsController, type: :controller do
 
   describe "GET #index" do
     it "returns a success response" do
-      subject.current_user.apps.create! valid_attributes
+      create(:app, owner: user)
       get :index, params: {}, session: valid_session
       expect(response).to be_successful
     end
