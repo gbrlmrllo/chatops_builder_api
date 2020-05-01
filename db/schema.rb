@@ -24,12 +24,11 @@ ActiveRecord::Schema.define(version: 2020_04_26_215119) do
   end
 
   create_table "credentials", force: :cascade do |t|
-    t.text "token", default: "", null: false
+    t.text "token", null: false
     t.bigint "app_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["app_id"], name: "index_credentials_on_app_id"
-    t.index ["token"], name: "index_credentials_on_token", unique: true
   end
 
   create_table "users", force: :cascade do |t|
