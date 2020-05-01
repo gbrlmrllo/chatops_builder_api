@@ -9,39 +9,39 @@ RSpec.describe Credential, type: :model do
 
   describe "callbacks" do
     describe "before create" do
-      subject { build(:credential, app: create(:app)) }
+      let(:credential) { build(:credential, app: create(:app)) }
 
-      before { subject.save! }
+      before { credential.save! }
 
       describe "#regenerate_token" do
         it "adds a token" do
-          expect(subject.token).to be_present
+          expect(credential.token).to be_present
         end
       end
     end
   end
 
   describe "#regenerate_token" do
-    subject { build(:credential) }
+    let(:credential) { build(:credential) }
 
-    before { subject.regenerate_token }
+    before { credential.regenerate_token }
 
     it "assigns a new token" do
-      expect(subject.token_changed?).to eq(true)
+      expect(credential.token_changed?).to eq(true)
     end
 
     it "doesnt' persist change" do
-      expect(subject.saved_changes).to eq({})
+      expect(credential.saved_changes).to eq({})
     end
   end
 
   describe "#regenerate_token!" do
-    subject { create(:credential, app: create(:app)) }
+    let(:credential) { create(:credential, app: create(:app)) }
 
-    before { subject.regenerate_token! }
+    before { credential.regenerate_token! }
 
     it "updates token" do
-      expect(subject.saved_changes.keys).to eq(["token", "updated_at"])
+      expect(credential.saved_changes.keys).to eq(%w[token updated_at])
     end
   end
 end

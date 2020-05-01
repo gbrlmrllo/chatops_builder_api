@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class App < ApplicationRecord
-  belongs_to :owner, class_name: "User", required: true
+  belongs_to :owner, class_name: "User", optional: false
   has_one :credential, dependent: :destroy
 
   validates :name, presence: true, uniqueness: { scope: :owner_id }
