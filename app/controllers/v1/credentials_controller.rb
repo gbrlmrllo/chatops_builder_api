@@ -6,19 +6,14 @@ module V1
     before_action :set_app
     before_action :set_credential
 
+    # GET api/v1/regenerate-token
     def regenerate_token
-      @credential.regenerate_token
-
-      if @credential.save
-        render json: V1::CredentialBlueprint.render(@credential)
-      else
-        render json: @credential.errors, status: :unprocessable_entity
-      end
+      @credential.regenerate_token!
+      render json: V1::CredentialBlueprint.render(@credential)
     end
 
     private
 
-    # Set app given by params
     def set_app
       @app = current_user.apps.find(params[:app_id])
     end

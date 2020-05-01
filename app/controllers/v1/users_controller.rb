@@ -3,16 +3,10 @@
 module V1
   class UsersController < ApplicationController
     before_action :authenticate_user!
-    before_action :set_user
 
-    def show
-      render json: V1::UserBlueprint.render(@user)
-    end
-
-    private
-
-    def set_user
-      @user = User.find(params[:id])
+    # GET api/v1/me
+    def me
+      render json: V1::UserBlueprint.render(current_user)
     end
   end
 end

@@ -3,35 +3,32 @@
 require "rails_helper"
 
 RSpec.describe V1::CredentialsController, type: :controller do
-  fixtures :all
-
-  let(:user) { create(:user) }
-  let(:app) { create(:app, owner: user) }
-
-  before { sign_in user }
-
-  describe "GET #generate_token" do
-    before do
-      get :regenerate_token, params: { app_id: app.to_param }
+  context "without a authenticated user" do
+    describe "GET #generate_token" do
+      it "401 - Unauthorized" do
+        get :regenerate_token, params: { app_id: "id" }
+        expect(response.status).to eq(401)
+      end
     end
+  end
 
-    context "with valid params" do
-      it "returns a success response" do
-        expect(response).to be_successful
+  context "with a authenticated user" do
+    let(:user) { create(:user) }
+    let(:app) { create(:app, owner: user) }
+
+    before { sign_in user }
+
+    describe "GET #generate_token" do
+      before do
+        get :regenerate_token, params: { app_id: app.to_param }
       end
 
-      it "renders a JSON response with the new app" do
-        expect(response).to have_http_status(:ok)
+      it "200 - Ok" do
+        expect(response.status).to eq(200)
       end
 
-      it "returns token in body response" do
-        expect(JSON.parse(response.body)).to include("token")
-      end
-
-      it "regenerates credential token" do
-        old_token = app.credential.token
-        app.reload
-        expect(app.credential.token).not_to eq(old_token)
+      it "responses correct attributes" do
+        expect(response.parsed_body).to include("token")
       end
     end
   end

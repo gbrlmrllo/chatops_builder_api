@@ -5,30 +5,30 @@ module V1
     before_action :authenticate_user!
     before_action :set_app, only: %i[show update destroy]
 
-    # GET v1/apps
+    # GET api/v1/apps
     def index
-      @apps = current_user.apps
+      apps = current_user.apps
 
-      render json: V1::AppBlueprint.render(@apps)
+      render json: V1::AppBlueprint.render(apps)
     end
 
-    # GET v1/apps/1
+    # GET api/v1/apps/1
     def show
       render json: V1::AppBlueprint.render(@app)
     end
 
-    # POST v1/apps
+    # POST api/v1/apps
     def create
-      @app = current_user.apps.new(app_params)
+      app = current_user.apps.new(app_params)
 
-      if @app.save
-        render json: V1::AppBlueprint.render(@app), status: :created
+      if app.save
+        render json: V1::AppBlueprint.render(app), status: :created
       else
-        render json: @app.errors, status: :unprocessable_entity
+        render json: app.errors, status: :unprocessable_entity
       end
     end
 
-    # PATCH/PUT v1/apps/1
+    # PATCH/PUT api/v1/apps/1
     def update
       if @app.update(app_params)
         render json: V1::AppBlueprint.render(@app)
@@ -37,7 +37,7 @@ module V1
       end
     end
 
-    # DELETE v1/apps/1
+    # DELETE api/v1/apps/1
     def destroy
       @app.destroy
 
