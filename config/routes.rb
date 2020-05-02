@@ -15,10 +15,13 @@ Rails.application.routes.draw do
                registrations: "registrations"
              }
 
-  namespace :v1 do
-    resources :users, only: :show
-    resources :apps do
-      get "/regenerate-token", to: "credentials#regenerate_token"
+  scope :api do
+    namespace :v1 do
+      get "/me", to: "users#me"
+
+      resources :apps do
+        get "/regenerate-token", to: "credentials#regenerate_token"
+      end
     end
   end
 end

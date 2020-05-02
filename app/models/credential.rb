@@ -1,9 +1,13 @@
 # frozen_string_literal: true
 
 class Credential < ApplicationRecord
-  belongs_to :app
+  belongs_to :app, optional: false
 
   before_create :regenerate_token
+
+  def regenerate_token!
+    update!(token: SecureRandom.base64(30))
+  end
 
   def regenerate_token
     self.token = SecureRandom.base64(30)

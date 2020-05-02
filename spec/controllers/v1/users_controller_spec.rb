@@ -3,29 +3,33 @@
 require "rails_helper"
 
 RSpec.describe V1::UsersController, type: :controller do
-  describe "GET #show" do
-    let(:user) { create(:user) }
-
-    before { sign_in user }
-
-    context "with an existing user" do
-      before { get :show, params: { id: user.id } }
-
-      it "returns http success" do
-        expect(response).to have_http_status(:success)
-      end
-
-      it "matches user object" do
-        data = user.slice(:id, :email, :first_name, :last_name)
-        expect(response.parsed_body).to match(hash_including(data))
+  describe "GET #me" do
+    context "without a authenticated user" do
+      it "401 - Unauthorized" do
+        get :me
+        expect(response.status).to eq(401)
       end
     end
 
-    context "with a nonexistent user" do
-      before { get :show, params: { id: "1" } }
+    context "with a authenticated user" do
+      let(:user) { create(:user) }
 
-      it "returns http not_found" do
-        expect(response).to have_http_status(:not_found)
+      before do
+        sign_in user
+        get :me
+      end
+
+      it "200 - Ok" do
+        expect(response.status).to eq(200)
+      end
+
+      it "responses current user" do
+        expect(response.parsed_body["id"]).to match(user.id)
+      end
+
+      it "responses correct attributes" do
+        data = user.slice(:id, :email, :first_name, :last_name)
+        expect(response.parsed_body).to match(hash_including(data))
       end
     end
   end

@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :app do
-    name { "SendGrid" }
+    name { FFaker::Name.name }
     association :owner, factory: :user
   end
 end

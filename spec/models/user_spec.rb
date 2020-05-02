@@ -3,5 +3,15 @@
 require "rails_helper"
 
 RSpec.describe User, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe "assocation" do
+    subject(:app) { described_class.new }
+
+    it do
+      expect(app)
+        .to have_many(:apps)
+        .with_foreign_key(:owner_id)
+        .inverse_of(:owner)
+        .dependent(:destroy)
+    end
+  end
 end
