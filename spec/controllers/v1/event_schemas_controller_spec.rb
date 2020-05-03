@@ -2,56 +2,66 @@
 
 require "rails_helper"
 
-RSpec.describe V1::AppsController, type: :controller do
+RSpec.describe V1::EventSchemasController, type: :controller do
   context "without a authenticated user" do
     describe "GET #index" do
       it "401 - Unauthorized" do
-        get :index
+        get :index, params: { app_id: "id" }
         expect(response.status).to eq(401)
       end
     end
 
     describe "GET #show" do
       it "401 - Unauthorized" do
-        get :show, params: { id: "id" }
+        get :show, params: { app_id: "id", id: "id" }
         expect(response.status).to eq(401)
       end
     end
 
     describe "POST #create " do
       it "401 - Unauthorized" do
-        post :create
+        post :create, params: { app_id: "id" }
         expect(response.status).to eq(401)
       end
     end
 
     describe "PUT #update " do
       it "401 - Unauthorized" do
-        put :update, params: { id: "id" }
+        put :update, params: { app_id: "id", id: "id" }
         expect(response.status).to eq(401)
       end
     end
 
     describe "DELETE #destroy" do
       it "401 - Unauthorized" do
-        delete :destroy, params: { id: "id" }
+        delete :destroy, params: { app_id: "id", id: "id" }
         expect(response.status).to eq(401)
       end
     end
   end
 
   context "with a authenticated user" do
-    let(:valid_attributes) { { name: "Tesla" } }
-    let(:invalid_attributes) { { name: nil, owner_id: 1, script: "<script>" } }
+    let(:valid_attributes) {
+      {
+        name: "An EventSchema",
+        description: "A long description...",
+        schema: {
+          data: %w[order_id order_name order_price product_image],
+          recipient: %w[email user_name]
+        }
+      }
+    }
+    let(:invalid_attributes) { { name: nil, creator_id: 1, script: "<script>" } }
     let(:user) { create(:user) }
     let(:app) { create(:app, owner: user) }
+    let(:event_schema) { create(:event_schema, creator: user, app: app) }
 
     before { sign_in user }
 
     describe "GET #index" do
       before do
-        app
-        get :index, params: {}
+        event_schema
+        get :index, params: { app_id: app.to_param }
       end
 
       it "200 - Ok" do
@@ -59,32 +69,36 @@ RSpec.describe V1::AppsController, type: :controller do
       end
 
       it "responses correct attributes" do
-        data = app.slice(:id, :name, :created_at).keys
-        expected = response.parsed_body.first.keys
+        data = event_schema.slice(
+          :id, :name, :description, :schema, :created_at
+        ).keys
+        expected = response.parsed_body.first.try(:keys)
 
         expect(expected).to match_array(data)
       end
     end
 
     describe "GET #show" do
-      before { get :show, params: { id: app.to_param } }
+      before { get :show, params: { app_id: app.to_param, id: event_schema.to_param } }
 
       it "200 - Ok" do
         expect(response.status).to eq(200)
       end
 
       it "responses correct attributes" do
-        data = app.slice(:id, :name, :created_at).keys
-        expected = response.parsed_body.keys
+        data = event_schema.slice(
+          :id, :name, :description, :schema, :created_at
+        ).keys
+        expected = response.parsed_body.try(:keys)
 
         expect(expected).to match_array(data)
       end
     end
 
     describe "POST #create" do
-      let(:app) { App.take }
+      let(:event_schema) { EventSchema.take }
 
-      before { post :create, params: { app: attributes } }
+      before { post :create, params: { app_id: app.to_param, event_schema: attributes } }
 
       context "with valid params" do
         let(:attributes) { valid_attributes }
@@ -94,7 +108,9 @@ RSpec.describe V1::AppsController, type: :controller do
         end
 
         it "responses correct attributes" do
-          data = app.slice(:id, :name, :created_at).keys
+          data = event_schema.slice(
+            :id, :name, :description, :schema, :created_at
+          ).keys
           expect(response.parsed_body.keys).to match_array(data)
         end
       end
@@ -114,7 +130,11 @@ RSpec.describe V1::AppsController, type: :controller do
 
     describe "PUT #update" do
       before do
-        put :update, params: { id: app.to_param, app: attributes }
+        put :update, params: {
+          app_id: app.to_param,
+          id: event_schema.to_param,
+          event_schema: attributes
+        }
       end
 
       context "with valid params" do
@@ -124,8 +144,10 @@ RSpec.describe V1::AppsController, type: :controller do
           expect(response.status).to eq(200)
         end
 
-        it "responses a app object" do
-          attrs = app.slice(:id, :name, :created_at).keys
+        it "responses a event_schema object" do
+          attrs = event_schema.slice(
+            :id, :name, :description, :schema, :created_at
+          ).keys
           expect(response.parsed_body.keys).to match_array(attrs)
         end
       end
@@ -144,14 +166,14 @@ RSpec.describe V1::AppsController, type: :controller do
     end
 
     describe "DELETE #destroy" do
-      before { delete :destroy, params: { id: app.to_param } }
+      before { delete :destroy, params: { app_id: app.to_param, id: event_schema.to_param } }
 
       it "204 - No Content" do
         expect(response.status).to eq(204)
       end
 
-      it "destroys the app" do
-        expect(App.count).to eq(0)
+      it "destroys the event_schema" do
+        expect(EventSchema.count).to eq(0)
       end
     end
   end

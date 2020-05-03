@@ -8,12 +8,12 @@ module V1
 
     # GET api/v1/apps/1/event_schemas
     def index
-      render json: V1::AppBlueprint.render(@app.event_schemas)
+      render json: V1::EventSchemaBlueprint.render(@app.event_schemas)
     end
 
     # GET api/v1/apps/1/event_schemas/1
     def show
-      render json: V1::AppBlueprint.render(@event_schema)
+      render json: V1::EventSchemaBlueprint.render(@event_schema)
     end
 
     # POST api/v1/apps/1/event_schemas
@@ -23,7 +23,7 @@ module V1
       )
 
       if event_schema.save
-        render json: V1::AppBlueprint.render(event_schema), status: :created
+        render json: V1::EventSchemaBlueprint.render(event_schema), status: :created
       else
         render json: event_schema.errors, status: :unprocessable_entity
       end
@@ -32,7 +32,7 @@ module V1
     # PATCH/PUT api/v1/apps/1/event_schemas/1
     def update
       if @event_schema.update(event_schema_params)
-        render json: V1::AppBlueprint.render(@event_schema)
+        render json: V1::EventSchemaBlueprint.render(@event_schema)
       else
         render json: @event_schema.errors, status: :unprocessable_entity
       end
@@ -48,6 +48,11 @@ module V1
     private
 
     # Use callbacks to share common setup or constraints between actions.
+    def set_app
+      @app = current_user.apps.find(params[:app_id])
+    end
+
+    # Use callbacks to share common setup or constraints between actions.
     def set_event_schema
       @event_schema = @app.event_schemas.find(params[:id])
     end
@@ -55,7 +60,7 @@ module V1
     # Only allow a trusted parameter "white list" through.
     def event_schema_params
       params.require(:event_schema).permit(
-        :name, :description, schema: { data: [], recipient: [] }
+        :name, :description, schema: EventSchema.schema_structure
       )
     end
   end

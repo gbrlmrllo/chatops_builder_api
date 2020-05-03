@@ -11,4 +11,6 @@ class EventSchema < ApplicationRecord
   # has_many :integrations # TODO
 
   validates :name, presence: true, uniqueness: { scope: :creator_id }
+
+  scope :schema_structure, ->{ { data: [], recipient: []} }
 end
