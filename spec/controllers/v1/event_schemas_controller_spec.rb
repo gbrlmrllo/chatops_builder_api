@@ -41,7 +41,7 @@ RSpec.describe V1::EventSchemasController, type: :controller do
   end
 
   context "with a authenticated user" do
-    let(:valid_attributes) {
+    let(:valid_attributes) do
       {
         name: "An EventSchema",
         description: "A long description...",
@@ -50,7 +50,7 @@ RSpec.describe V1::EventSchemasController, type: :controller do
           recipient: %w[email user_name]
         }
       }
-    }
+    end
     let(:invalid_attributes) { { name: nil, creator_id: 1, script: "<script>" } }
     let(:user) { create(:user) }
     let(:app) { create(:app, owner: user) }

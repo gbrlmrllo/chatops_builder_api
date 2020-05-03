@@ -12,5 +12,5 @@ class EventSchema < ApplicationRecord
 
   validates :name, presence: true, uniqueness: { scope: :creator_id }
 
-  scope :schema_structure, ->{ { data: [], recipient: []} }
+  scope :schema_structure, -> { { data: [], recipient: [] } }
 end
