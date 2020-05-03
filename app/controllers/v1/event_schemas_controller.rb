@@ -6,17 +6,17 @@ module V1
     before_action :set_app
     before_action :set_event_schema, only: %i[show update destroy]
 
-    # GET api/v1/apps/1/event_schemas
+    # GET api/v1/apps/:app_id/event_schemas
     def index
       render json: V1::EventSchemaBlueprint.render(@app.event_schemas)
     end
 
-    # GET api/v1/apps/1/event_schemas/1
+    # GET api/v1/apps/:app_id/event_schemas/:id
     def show
       render json: V1::EventSchemaBlueprint.render(@event_schema)
     end
 
-    # POST api/v1/apps/1/event_schemas
+    # POST api/v1/apps/:app_id/event_schemas
     def create
       event_schema = @app.event_schemas.new(
         event_schema_params.merge!(creator: current_user)
@@ -29,7 +29,7 @@ module V1
       end
     end
 
-    # PATCH/PUT api/v1/apps/1/event_schemas/1
+    # PATCH/PUT api/v1/apps/:app_id/event_schemas/:id
     def update
       if @event_schema.update(event_schema_params)
         render json: V1::EventSchemaBlueprint.render(@event_schema)
@@ -38,7 +38,7 @@ module V1
       end
     end
 
-    # DELETE api/v1/apps/1/event_schemas/1
+    # DELETE api/v1/apps/:app_id/event_schemas/:id
     def destroy
       @event_schema.destroy
 

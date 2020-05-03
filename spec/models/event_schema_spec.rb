@@ -6,8 +6,8 @@ RSpec.describe EventSchema, type: :model do
   describe "associations" do
     it { is_expected.to belong_to(:creator).class_name("User").required }
     it { is_expected.to belong_to(:app).required }
-    # it { is_expected.to has_many(:events).dependent(:destroy) } # TODO
-    # it { is_expected.to has_many(:integrations).dependent(:destroy) } # TODO
+    # it { is_expected.to have_many(:events).dependent(:destroy) } # TODO
+    # it { is_expected.to have_many(:integrations).dependent(:destroy) } # TODO
   end
 
   describe "validations" do

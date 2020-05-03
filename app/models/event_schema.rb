@@ -6,11 +6,13 @@
 # For more information, see https://github.com/gbrlmrllo/chatops_builder_api/issues/11
 class EventSchema < ApplicationRecord
   belongs_to :creator, class_name: "User", optional: false
-  belongs_to :app
+  belongs_to :app, optional: false
   # has_many :events # TODO
   # has_many :integrations # TODO
 
   validates :name, presence: true, uniqueness: { scope: :creator_id }
 
-  scope :schema_structure, -> { { data: [], recipient: [] } }
+  def self.schema_structure
+    { data: [], recipient: [] }
+  end
 end
