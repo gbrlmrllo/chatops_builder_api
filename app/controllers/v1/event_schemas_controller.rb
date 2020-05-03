@@ -55,7 +55,7 @@ module V1
     # Only allow a trusted parameter "white list" through.
     def event_schema_params
       params.require(:event_schema).permit(
-        :name, :description, schema: { data: [], recipients: [] }
+        :name, :description, schema: { data: [], recipient: [] }
       )
     end
   end
