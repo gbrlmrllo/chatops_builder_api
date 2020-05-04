@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe V1::EventSchemasController, type: :controller do
-  context "without a authenticated user" do
+  context "without an authenticated user" do
     describe "GET #index" do
       it "401 - Unauthorized" do
         get :index, params: { app_id: "id" }
