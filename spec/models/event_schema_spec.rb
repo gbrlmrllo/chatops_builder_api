@@ -16,4 +16,28 @@ RSpec.describe EventSchema, type: :model do
     it { is_expected.to validate_presence_of(:name) }
     it { is_expected.to validate_uniqueness_of(:name).scoped_to(:creator_id) }
   end
+
+  describe ".schema_structure" do
+    let(:schema_structure) { described_class.schema_structure }
+
+    it "is a Hash" do
+      expect(schema_structure.class).to eq(Hash)
+    end
+
+    it "has only two keys" do
+      expect(schema_structure.try(:keys).size).to eq(2)
+    end
+
+    it "keys are :data and :recipient" do
+      expect(schema_structure.try(:keys)).to eq(%i[data recipient])
+    end
+
+    it ":data value is an Array" do
+      expect(schema_structure.dig(:data).class).to eq(Array)
+    end
+
+    it ":recipient value is an Array" do
+      expect(schema_structure.dig(:recipient).class).to eq(Array)
+    end
+  end
 end
