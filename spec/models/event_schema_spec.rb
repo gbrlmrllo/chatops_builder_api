@@ -20,12 +20,8 @@ RSpec.describe EventSchema, type: :model do
   describe ".schema_structure" do
     let(:schema_structure) { described_class.schema_structure }
 
-    it "is a Hash" do
+    it "returns a Hash" do
       expect(schema_structure.class).to eq(Hash)
-    end
-
-    it "has only two keys" do
-      expect(schema_structure.try(:keys).size).to eq(2)
     end
 
     it "keys are :data and :recipient" do
