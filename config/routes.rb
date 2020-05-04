@@ -21,6 +21,8 @@ Rails.application.routes.draw do
 
       resources :apps do
         get "/regenerate-token", to: "credentials#regenerate_token"
+
+        resources :event_schemas
       end
     end
   end
