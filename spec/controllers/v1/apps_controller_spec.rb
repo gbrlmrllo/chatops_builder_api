@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe V1::AppsController, type: :controller do
-  context "without a authenticated user" do
+  context "without an authenticated user" do
     describe "GET #index" do
       it "401 - Unauthorized" do
         get :index
@@ -40,7 +40,7 @@ RSpec.describe V1::AppsController, type: :controller do
     end
   end
 
-  context "with a authenticated user" do
+  context "with an authenticated user" do
     let(:valid_attributes) { { name: "Tesla" } }
     let(:invalid_attributes) { { name: nil, owner_id: 1, script: "<script>" } }
     let(:user) { create(:user) }
@@ -124,7 +124,7 @@ RSpec.describe V1::AppsController, type: :controller do
           expect(response.status).to eq(200)
         end
 
-        it "responses a app object" do
+        it "responses an app object" do
           attrs = app.slice(:id, :name, :created_at).keys
           expect(response.parsed_body.keys).to match_array(attrs)
         end

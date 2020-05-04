@@ -40,7 +40,7 @@ RSpec.describe V1::EventSchemasController, type: :controller do
     end
   end
 
-  context "with a authenticated user" do
+  context "with an authenticated user" do
     let(:valid_attributes) do
       {
         name: "An EventSchema",

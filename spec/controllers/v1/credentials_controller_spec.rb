@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe V1::CredentialsController, type: :controller do
-  context "without a authenticated user" do
+  context "without an authenticated user" do
     describe "GET #generate_token" do
       it "401 - Unauthorized" do
         get :regenerate_token, params: { app_id: "id" }
@@ -12,7 +12,7 @@ RSpec.describe V1::CredentialsController, type: :controller do
     end
   end
 
-  context "with a authenticated user" do
+  context "with an authenticated user" do
     let(:user) { create(:user) }
     let(:app) { create(:app, owner: user) }
 
