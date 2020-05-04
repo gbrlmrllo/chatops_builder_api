@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_01_064248) do
+ActiveRecord::Schema.define(version: 2020_05_02_310796) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,6 +30,19 @@ ActiveRecord::Schema.define(version: 2020_05_01_064248) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["app_id"], name: "index_credentials_on_app_id"
+  end
+
+  create_table "event_schemas", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.jsonb "schema"
+    t.bigint "creator_id", null: false
+    t.bigint "app_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["app_id"], name: "index_event_schemas_on_app_id"
+    t.index ["creator_id"], name: "index_event_schemas_on_creator_id"
+    t.index ["name", "creator_id"], name: "index_event_schemas_on_name_and_creator_id", unique: true
   end
 
   create_table "users", force: :cascade do |t|
@@ -52,4 +65,6 @@ ActiveRecord::Schema.define(version: 2020_05_01_064248) do
 
   add_foreign_key "apps", "users", column: "owner_id"
   add_foreign_key "credentials", "apps"
+  add_foreign_key "event_schemas", "apps"
+  add_foreign_key "event_schemas", "users", column: "creator_id"
 end

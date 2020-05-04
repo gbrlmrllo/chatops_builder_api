@@ -4,14 +4,14 @@ require "rails_helper"
 
 RSpec.describe V1::UsersController, type: :controller do
   describe "GET #me" do
-    context "without a authenticated user" do
+    context "without an authenticated user" do
       it "401 - Unauthorized" do
         get :me
         expect(response.status).to eq(401)
       end
     end
 
-    context "with a authenticated user" do
+    context "with an authenticated user" do
       let(:user) { create(:user) }
 
       before do
