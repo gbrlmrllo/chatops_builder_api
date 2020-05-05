@@ -3,7 +3,7 @@
 FactoryBot.define do
   factory :event do
     body { {} }
-    raw_data { {} }
+    raw_data { "{}" }
     failure_reason { nil }
     association :event_schema
   end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_04_225017) do
+ActiveRecord::Schema.define(version: 2020_05_02_310796) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,16 +43,6 @@ ActiveRecord::Schema.define(version: 2020_05_04_225017) do
     t.index ["app_id"], name: "index_event_schemas_on_app_id"
     t.index ["creator_id"], name: "index_event_schemas_on_creator_id"
     t.index ["name", "creator_id"], name: "index_event_schemas_on_name_and_creator_id", unique: true
-  end
-
-  create_table "events", force: :cascade do |t|
-    t.jsonb "body"
-    t.text "raw_data"
-    t.text "failure_reason"
-    t.bigint "event_schema_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["event_schema_id"], name: "index_events_on_event_schema_id"
   end
 
   create_table "users", force: :cascade do |t|
