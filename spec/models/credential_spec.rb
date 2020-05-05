@@ -30,7 +30,7 @@ RSpec.describe Credential, type: :model do
       expect(credential.token_changed?).to eq(true)
     end
 
-    it "doesnt' persist change" do
+    it "doesn't persist change" do
       expect(credential.saved_changes).to eq({})
     end
   end
