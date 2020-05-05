@@ -7,8 +7,7 @@
 class EventSchema < ApplicationRecord
   belongs_to :creator, class_name: "User", optional: false
   belongs_to :app, optional: false
-  # has_many :events # TODO
-  # has_many :integrations # TODO
+  has_many :events, dependent: :destroy
 
   validates :name, presence: true, uniqueness: { scope: :creator_id }
 
