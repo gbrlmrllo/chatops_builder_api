@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_04_225017) do
+ActiveRecord::Schema.define(version: 2020_05_09_173536) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -55,6 +55,17 @@ ActiveRecord::Schema.define(version: 2020_05_04_225017) do
     t.index ["event_schema_id"], name: "index_events_on_event_schema_id"
   end
 
+  create_table "integrations", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "type"
+    t.bigint "event_schema_id", null: false
+    t.jsonb "extra_data", default: {}
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["event_schema_id"], name: "index_integrations_on_event_schema_id"
+    t.index ["name", "event_schema_id"], name: "index_integrations_on_name_and_event_schema_id", unique: true
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -77,4 +88,5 @@ ActiveRecord::Schema.define(version: 2020_05_04_225017) do
   add_foreign_key "credentials", "apps"
   add_foreign_key "event_schemas", "apps"
   add_foreign_key "event_schemas", "users", column: "creator_id"
+  add_foreign_key "integrations", "event_schemas"
 end

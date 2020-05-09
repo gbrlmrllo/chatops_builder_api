@@ -7,6 +7,7 @@ RSpec.describe EventSchema, type: :model do
     it { is_expected.to belong_to(:creator).class_name("User").required }
     it { is_expected.to belong_to(:app).required }
     it { is_expected.to have_many(:events).dependent(:destroy) }
+    it { is_expected.to have_many(:integrations).dependent(:destroy) }
   end
 
   describe "validations" do
