@@ -40,11 +40,12 @@ RSpec.describe V1::EventsController, type: :controller do
     end
 
     context "with a valid event schema name" do
-      let(:event_schema) { create(:event_schema) }
-      let(:params) { { name: event_schema.name } }
+      let(:app) { create(:app, :with_event_schema) }
+      let(:params) { { name: app.event_schemas.take.name } }
 
       describe "POST #consume" do
         before do
+          request.headers["AppToken"] = app.credential.token
           post :consume, params: params
         end
 
