@@ -5,9 +5,9 @@ module V1
     before_action :set_app
     before_action :set_event_schema
 
-    #  GET /api/v1/consume-events
+    #  POST /api/v1/consume-events
     def consume
-      @event = @event_schema.events.create(
+      @event = @event_schema.events.create!(
         body: params,
         raw_data: request.raw_post
       )
