@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe V1::EventsController, type: :controller do
   context "with an invalid token" do
-    let(:token) { 'iNv4lidT0k3n' }
+    let(:token) { "iNv4lidT0k3n" }
     let(:app) { App.joins(:credential).find_by!(credentials: { token: token }) }
 
     describe "GET #consume" do
@@ -20,10 +20,10 @@ RSpec.describe V1::EventsController, type: :controller do
       let(:attributes) { { name: "iNv4lid", body: { name: "iNv4lid" } } }
       let(:user) { create(:user) }
       let(:credential) { create(:credential, app: app) }
-      let(:token) { 'iNv4lidT0k3n' }
+      let(:token) { "iNv4lidT0k3n" }
       let(:app) { App.joins(:credential).find_by!(credentials: { token: token }) }
       let(:event_schema) { app.event_schemas.find_by!(name: attributes[:name]) }
-      
+
       describe "GET #consume" do
         it "404 - Not Found" do
           get :consume
