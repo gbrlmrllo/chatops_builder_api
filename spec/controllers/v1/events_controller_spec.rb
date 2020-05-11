@@ -42,6 +42,10 @@ RSpec.describe V1::EventsController, type: :controller do
         it "201 - Created" do
           expect(response.status).to eq(201)
         end
+
+        it "creates a event" do
+          expect(app.event_schemas.first.events).to be_present
+        end
       end
     end
   end
