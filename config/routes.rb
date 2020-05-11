@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   scope :api do
     namespace :v1 do
       get "/me", to: "users#me"
+      post "/consume-events", to: "events#consume"
 
       resources :apps do
         get "/regenerate-token", to: "credentials#regenerate_token"

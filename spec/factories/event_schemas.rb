@@ -6,6 +6,6 @@ FactoryBot.define do
     description { FFaker::Lorem.phrase }
     schema { EventSchema.schema_structure }
     association :creator, factory: :user
-    association :app, factory: :app
+    association :app
   end
 end
