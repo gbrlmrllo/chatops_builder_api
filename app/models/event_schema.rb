@@ -15,4 +15,22 @@ class EventSchema < ApplicationRecord
   def self.schema_structure
     { data: [], recipient: [] }
   end
+
+  def validator
+    valid_schema = schema # schema is not reachable from Dry::Schema.Params scope
+    Dry::Schema.Params do
+      valid_schema.each_pair do |key, value|
+        if value == "" # if key has no nested attributes
+          required(key.to_sym)
+          next
+        end
+
+        required(key.to_sym).hash do
+          value.each do |field|
+            required(field.to_sym)
+          end
+        end
+      end
+    end
+  end
 end
