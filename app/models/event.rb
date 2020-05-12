@@ -7,14 +7,19 @@ class Event < ApplicationRecord
 
   after_commit :valid_schema_event?
 
-  def valid_schema_event?
-    result = event_schema.validator.call(parsed_raw_data)
-    return if result.success?
+  delegate :schema, to: :event_schema
 
-    update_column(:failure_reason, result.errors(full: true).sum{|x| "|#{x.text}|"})
+  def valid_schema_event?
+    return true if validator.valid?
+
+    update_column(:failure_reason, validator.error_messages)
   end
 
   private
+
+  def validator
+    Schemas::Validator.new(parsed_raw_data, schema)
+  end
 
   def parsed_raw_data
     JSON.parse(raw_data)
