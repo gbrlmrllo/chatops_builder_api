@@ -3,6 +3,8 @@
 # Schemas::Validator validates (yes, it does) body passed
 module Schemas
   class Validator
+    attr_reader :body, :schema
+
     def initialize(body, schema)
       @body = body
       @schema = schema
@@ -23,36 +25,17 @@ module Schemas
     private
 
     def validates
-      structure.call(@body)
+      structure(schema_parsed).call(body)
     end
 
-    def attribute_types(key)
-      key.splitted(".").map(&:to_sym)
+    def schema_parsed
+      Parser.new(schema).build_template
     end
 
     # Build validation structure according to schema
-    def structure
-      schema = @schema
+    def structure(schema_parsed)
       Dry::Schema.Params do
-        schema.each_pair do |key, value|
-          if value.blank? # if key has no nested attributes
-            required(key.to_sym)
-            next
-          end
-
-          splitted = key.split(".").map(&:to_sym)
-          req = required(splitted.first)
-
-          if splitted.third
-            req.array(splitted.third) do
-              value.each { |field| required(field.to_sym) }
-            end
-          else
-            req.hash do
-              value.each { |field| required(field.to_sym) }
-            end
-          end
-        end
+        eval(schema_parsed)
       end
     end
   end
