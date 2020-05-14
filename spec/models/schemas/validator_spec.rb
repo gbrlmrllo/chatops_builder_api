@@ -3,7 +3,6 @@
 require "rails_helper"
 
 RSpec.describe Schemas::Validator do
-
   let(:raw_data) do
     {
       "name" => "created_order",
@@ -15,49 +14,49 @@ RSpec.describe Schemas::Validator do
     }
   end
 
-  let(:schema) do 
-    { 
+  let(:schema) do
+    {
       "data" => {
         "order_id" => "",
         "order_name" => ""
       },
-      "recipients" => [{ "email" => ""}]
+      "recipients" => [{ "email" => "" }]
     }
   end
 
-  subject { described_class.new(raw_data, schema) }
+  let(:validator) { described_class.new(raw_data, schema) }
 
   context "with instance class" do
-    it { expect(subject).to be_instance_of(described_class) }
+    it { expect(validator).to be_instance_of(described_class) }
   end
 
   context "when valid raw_data" do
-    it "#valid?" do
-      expect(subject.valid?).to be.trust
+    it "#success?" do
+      expect(validator.success?).to be(true)
     end
 
     it "#errors" do
-      expect(subject.errors).to be_instance_of(Dry::Schema::MessageSet)
+      expect(validator.errors).to be_instance_of(Dry::Schema::MessageSet)
     end
 
     it "#error_messages" do
-      expect(subject.error_messages).to be_blank
+      expect(validator.error_messages).to be_blank
     end
   end
 
   context "when invalid raw_data" do
     before { raw_data.except!("recipients") }
 
-    it "#valid?" do
-      expect(subject.valid?).to be(false)
+    it "#success?" do
+      expect(validator.success?).to be(false)
     end
 
     it "#errors" do
-      expect(subject.errors).to be_instance_of(Dry::Schema::MessageSet)
+      expect(validator.errors).to be_instance_of(Dry::Schema::MessageSet)
     end
 
     it "#error_messages" do
-      expect(subject.error_messages).not_to be_blank
+      expect(validator.error_messages).not_to be_blank
     end
   end
 end

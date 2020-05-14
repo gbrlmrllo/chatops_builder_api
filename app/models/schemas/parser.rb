@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Schemas
   class Parser
     attr_reader :schema
@@ -7,11 +9,11 @@ module Schemas
     end
 
     def build_template
-      <<~END
+      <<~RUBY_CODE
         #{name}
         #{data}
         #{recipients}
-      END
+      RUBY_CODE
     end
 
     def name
@@ -19,19 +21,19 @@ module Schemas
     end
 
     def data
-      <<~END
+      <<~RUBY_CODE
         required(:data).hash do
           #{attributes(schema[:data]).join("\n  ")}
         end
-      END
+      RUBY_CODE
     end
 
     def recipients
-      <<~END
+      <<~RUBY_CODE
         required(:recipients).array(:hash) do
           #{attributes(schema[:recipients].first).join("\n  ")}
         end
-      END
+      RUBY_CODE
     end
 
     def attributes(obj)
