@@ -5,7 +5,7 @@ require "rails_helper"
 RSpec.describe Schemas::Validator do
   let(:raw_data) do
     {
-      "name" => "created_order",
+      "name" => "backend/app/policies/policy_attributes/group_user.rb",
       "data" => {
         "order_id" => "1",
         "order_name" => "Play Station 5 Deluxe edition"
@@ -16,6 +16,8 @@ RSpec.describe Schemas::Validator do
 
   let(:schema) do
     {
+      "name" => "",
+      "token" => "",
       "data" => {
         "order_id" => "",
         "order_name" => ""
