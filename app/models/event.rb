@@ -15,7 +15,7 @@ class Event < ApplicationRecord
       return true
     end
 
-    self.failure_reason = validator.error_messages
+    self.failure_reason = validator.error_message
   end
 
   private

@@ -9,9 +9,9 @@ gem "blueprinter"
 gem "bootsnap", ">= 1.4.2", require: false
 gem "devise"
 gem "devise-jwt"
-gem "dry-validation"
 gem "faraday"
 gem "faraday_middleware"
+gem 'json_schemer'
 gem "oj"
 gem "pg", ">= 0.18", "< 2.0"
 gem "puma", "~> 4.3"
