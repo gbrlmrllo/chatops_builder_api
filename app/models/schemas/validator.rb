@@ -7,7 +7,7 @@ module Schemas
 
     def initialize(body, schema)
       @body = body
-      @schema = schema.transform_keys(&:to_sym)
+      @schema = schema.transform_keys(&:to_s)
     end
 
     def valid?
