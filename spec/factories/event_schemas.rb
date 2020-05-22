@@ -26,7 +26,8 @@ FactoryBot.define do
               }
             }
           }
-        }
+        },
+        "required": %w[data recipients]
       }
     end
     association :creator, factory: :user
