@@ -14,7 +14,7 @@ RSpec.describe Schemas::Validator do
   end
 
   describe "#valid?" do
-    conte "valid raw_data" do
+    it "valid raw_data" do
       expect(validator.valid?).to be(true)
     end
 
