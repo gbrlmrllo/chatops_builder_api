@@ -11,7 +11,7 @@ gem "devise"
 gem "devise-jwt"
 gem "faraday"
 gem "faraday_middleware"
-gem 'json_schemer'
+gem "json_schemer"
 gem "oj"
 gem "pg", ">= 0.18", "< 2.0"
 gem "puma", "~> 4.3"

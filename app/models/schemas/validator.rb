@@ -15,7 +15,7 @@ module Schemas
     end
 
     def error_message
-      "Invalid raw body"
+      "invalid-body"
     end
 
     private

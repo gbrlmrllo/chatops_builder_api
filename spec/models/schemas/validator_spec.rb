@@ -5,27 +5,22 @@ require "rails_helper"
 RSpec.describe Schemas::Validator do
   let(:event_schema) { build(:event_schema) }
   let(:event) { build(:event, event_schema: event_schema) }
-  let(:invalid_raw_data) { JSON.parse(event.raw_data) }
-
-  let(:validator) { described_class.new(JSON.parse(event.raw_data), event_schema.schema) }
-
-  context "with instance class" do
-    it { expect(validator).to be_instance_of(described_class) }
-  end
+  let(:body) { event.body }
+  let(:validator) { described_class.new(body, event_schema.schema) }
 
   describe "#valid?" do
-    it "valid raw_data" do
-      expect(validator.valid?).to be(true)
+    context "when is valid" do
+      it "returns true" do
+        expect(validator.valid?).to be(true)
+      end
     end
 
-    it "unexpected key added" do
-      event.raw_data = invalid_raw_data.merge({ "hello" => "world" }).to_json
-      expect(validator.valid?).to be(false)
-    end
+    context "when is not valid" do
+      let(:body) { event.body.except!("recipients") }
 
-    it "required key missing" do
-      event.raw_data = invalid_raw_data.except!("recipients").to_json
-      expect(validator.valid?).to be(false)
+      it "returns false" do
+        expect(validator.valid?).to be(false)
+      end
     end
   end
 end

@@ -43,6 +43,7 @@ Metrics/BlockLength:
     - 'spec/requests/**/*'
     - 'spec/services/**/*'
     - 'spec/controllers/**/*'
+    - 'spec/factories/**/*'
 
 Rails/BulkChangeTable:
   Enabled: false

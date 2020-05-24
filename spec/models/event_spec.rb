@@ -14,11 +14,13 @@ RSpec.describe Event, type: :model do
 
   describe "callbacks" do
     describe "#valid_schema_event?" do
-      let(:event_schema) { create(:event_schema) }
-      let(:event) { create(:event, event_schema: event_schema) }
-      let(:invalid_raw_data) { JSON.parse(event.raw_data) }
+      let(:event_schema) { build(:event_schema) }
+      let(:event) { build(:event, event_schema: event_schema) }
+      let(:body) { event.body }
 
-      context "when is valid" do
+      context "when valid" do
+        before { event.save! }
+
         it "returns true" do
           expect(event.valid_schema_event?).to be(true)
         end
@@ -28,10 +30,10 @@ RSpec.describe Event, type: :model do
         end
       end
 
-      context "when is not valid" do
+      context "when no valid" do
         before do
-          event.raw_data = invalid_raw_data.except!("recipients").to_json
-          event.valid_schema_event?
+          event.body = body.except!("recipients")
+          event.save!
         end
 
         it "returns false" do
@@ -39,7 +41,7 @@ RSpec.describe Event, type: :model do
         end
 
         it "assigns string to failure_reason" do
-          expect(event.failure_reason).to eql("Invalid raw body")
+          expect(event.failure_reason).to eq("invalid-body")
         end
       end
     end

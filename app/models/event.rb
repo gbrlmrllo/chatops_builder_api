@@ -22,10 +22,6 @@ class Event < ApplicationRecord
   private
 
   def validator
-    Schemas::Validator.new(parsed_raw_data, schema)
-  end
-
-  def parsed_raw_data
-    JSON.parse(raw_data)
+    Schemas::Validator.new(body, schema)
   end
 end

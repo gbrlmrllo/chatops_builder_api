@@ -8,13 +8,17 @@ module V1
     #  POST /api/v1/consume-events
     def consume
       @event = @event_schema.events.create!(
-        body: params,
+        body: event_params,
         raw_data: request.raw_post
       )
       render status: :created
     end
 
     private
+
+    def event_params
+      params.require(:event)
+    end
 
     def set_app
       app_token = request.headers[:AppToken]
@@ -24,7 +28,7 @@ module V1
     end
 
     def set_event_schema
-      @event_schema = @app.event_schemas.find_by!(name: params[:name])
+      @event_schema = @app.event_schemas.find_by!(name: event_params[:name])
     end
   end
 end
