@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chatops-deployment
+  labels:
+    app: chatops
+    tier: app
+spec:
+  replicas: 2
+  minReadySeconds: 5
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  selector:
+    matchLabels:
+      app: chatops
+      tier: app
+  template:
+    metadata:
+      labels:
+        app: chatops
+        tier: app
+    spec:
+      imagePullSecrets:
+        - name: docker-registry
+      containers:
+      - name: chatops
+        image: gbrlmrllo/chatops:build
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 3000
+        env:
+        - name: RAILS_LOG_TO_STDOUT
+          value: 'true'
+        - name: SECRET_KEY_BASE
+          value: '$SECRET_KEY_BASE'
+        - name: RAILS_MASTER_KEY
+          value: '$RAILS_MASTER_KEY'
+        - name: JWT_SECRET_KEY
+          value: '$JWT_SECRET_KEY'
+        - name: RAILS_ENV
+          value: '$RAILS_ENV'
+        - name: DATABASE_USERNAME
+          value: '$DATABASE_USERNAME'
+        - name: DATABASE_PASSWORD
+          value: '$DATABASE_PASSWORD'
+        - name: DATABASE_HOST
+          value: '$DATABASE_HOST'
+        - name: DATABASE_PORT
+          value: '$DATABASE_PORT'
