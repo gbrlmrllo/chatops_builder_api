@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(version: 2020_05_09_173536) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["app_id"], name: "index_credentials_on_app_id"
+    t.index ["token"], name: "index_credentials_on_token", unique: true
   end
 
   create_table "event_schemas", force: :cascade do |t|

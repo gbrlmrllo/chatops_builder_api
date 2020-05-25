@@ -6,7 +6,7 @@ RSpec.describe V1::EventsController, type: :controller do
   describe "POST #consume" do
     let(:app) { create(:app, :with_event_schema) }
     let(:token) { app.credential.token }
-    let(:params) { nil }
+    let(:params) { { event: { name: "" } } }
 
     before do
       request.headers["AppToken"] = token
@@ -23,7 +23,7 @@ RSpec.describe V1::EventsController, type: :controller do
 
     context "with a valid token" do
       context "with an invalid event schema name" do
-        let(:params) { { name: "Invalid" } }
+        let(:params) { { event: { name: "Invalid" } } }
 
         it "404 - Not Found" do
           expect(response.status).to eq(404)
@@ -37,7 +37,7 @@ RSpec.describe V1::EventsController, type: :controller do
       end
 
       context "with a valid event schema name" do
-        let(:params) { { name: app.event_schemas.take.name } }
+        let(:params) { { event: { name: app.event_schemas.take.name } } }
 
         it "201 - Created" do
           expect(response.status).to eq(201)

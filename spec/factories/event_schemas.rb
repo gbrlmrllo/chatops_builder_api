@@ -4,7 +4,32 @@ FactoryBot.define do
   factory :event_schema do
     name { FFaker::Name.name }
     description { FFaker::Lorem.phrase }
-    schema { EventSchema.schema_structure }
+    schema do
+      {
+        "type" => "object",
+        "additionalProperties" => false,
+        "properties" => {
+          "data" => {
+            "type" => "object",
+            "additionalProperties" => false,
+            "properties" => {
+              "order_price" => { "type" => "string" }
+            }
+          },
+          "recipients" => {
+            "type" => "array",
+            "items" => {
+              "type" => "object",
+              "additionalProperties" => false,
+              "properties" => {
+                "email" => { "type" => "string" }
+              }
+            }
+          }
+        },
+        "required": %w[data recipients]
+      }
+    end
     association :creator, factory: :user
     association :app
   end
