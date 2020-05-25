@@ -27,18 +27,6 @@ RSpec.describe Event, type: :model do
 
   describe "#valid_body?" do
     let(:body) { event.body }
-    # let(:error) do
-    #   [
-    #     {
-    #       "data" => {
-    #         "data" => {
-    #           "order_price" => "$600"
-    #         }
-    #       },
-    #       "data_pointer" => "",
-    #       "schema" => {
-    #         "type" => "...ta", "recipients"]}, "type"=>"required", "details"=>{"missing_keys"=>["recipients"]}}]"
-    # end
 
     context "when valid" do
       before { event.save! }
