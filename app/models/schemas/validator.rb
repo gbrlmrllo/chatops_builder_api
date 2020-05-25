@@ -15,7 +15,9 @@ module Schemas
     end
 
     def error_message
-      "invalid-body"
+      schemer.validate(body).to_a
+             .collect { |err| err["details"] }
+             .compact
     end
 
     private

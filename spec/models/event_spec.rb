@@ -3,6 +3,9 @@
 require "rails_helper"
 
 RSpec.describe Event, type: :model do
+  let(:event_schema) { build(:event_schema) }
+  let(:event) { build(:event, event_schema: event_schema) }
+
   describe "associations" do
     it { is_expected.to belong_to(:event_schema).required }
   end
@@ -13,36 +16,54 @@ RSpec.describe Event, type: :model do
   end
 
   describe "callbacks" do
-    describe "#valid_schema_event?" do
-      let(:event_schema) { build(:event_schema) }
-      let(:event) { build(:event, event_schema: event_schema) }
-      let(:body) { event.body }
+    describe "before save" do
+      it "triggers :valid_body?" do
+        allow(event).to receive(:valid_body?)
+        event.save
+        expect(event).to have_received(:valid_body?).once
+      end
+    end
+  end
 
-      context "when valid" do
-        before { event.save! }
+  describe "#valid_body?" do
+    let(:body) { event.body }
+    # let(:error) do
+    #   [
+    #     {
+    #       "data" => {
+    #         "data" => {
+    #           "order_price" => "$600"
+    #         }
+    #       },
+    #       "data_pointer" => "",
+    #       "schema" => {
+    #         "type" => "...ta", "recipients"]}, "type"=>"required", "details"=>{"missing_keys"=>["recipients"]}}]"
+    # end
 
-        it "returns true" do
-          expect(event.valid_schema_event?).to be(true)
-        end
+    context "when valid" do
+      before { event.save! }
 
-        it "assigns nil to failure_reason" do
-          expect(event.failure_reason).to be_nil
-        end
+      it "returns true" do
+        expect(event.valid_body?).to be(true)
       end
 
-      context "when no valid" do
-        before do
-          event.body = body.except!("recipients")
-          event.save!
-        end
+      it "assigns nil to failure_reason" do
+        expect(event.failure_reason).to be_nil
+      end
+    end
 
-        it "returns false" do
-          expect(event.valid_schema_event?).to be(false)
-        end
+    context "when no valid" do
+      before do
+        event.body = { "hello" => "world" }
+        event.save!
+      end
 
-        it "assigns string to failure_reason" do
-          expect(event.failure_reason).to eq("invalid-body")
-        end
+      it "returns false" do
+        expect(event.valid_body?).to be(false)
+      end
+
+      it "assigns string to failure_reason" do
+        expect(event.failure_reason).to eq("[{\"missing_keys\"=>[\"data\", \"recipients\"]}]")
       end
     end
   end

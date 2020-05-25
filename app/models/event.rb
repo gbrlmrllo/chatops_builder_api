@@ -5,11 +5,11 @@ class Event < ApplicationRecord
 
   validates :body, :raw_data, presence: true
 
-  before_save :valid_schema_event?
+  before_save :valid_body?
 
   delegate :schema, to: :event_schema
 
-  def valid_schema_event?
+  def valid_body?
     if validator.valid?
       self.failure_reason = nil
       return true
