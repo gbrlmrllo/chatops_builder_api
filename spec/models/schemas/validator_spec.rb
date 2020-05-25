@@ -3,8 +3,6 @@
 require "rails_helper"
 
 RSpec.describe Schemas::Validator do
-  # let(:event_schema) { build(:event_schema) }
-  # let(:event) { build(:event, event_schema: event_schema) }
   let(:schema) do
     {
       "type" => "object",
